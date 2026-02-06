@@ -1,4 +1,6 @@
 from datetime import datetime
+# from datetime import date
+
 def days_between(date1: str, date2: str) -> int:
     """Return the absolute number of days between two ISO-format date strings.
     Args:
@@ -25,3 +27,17 @@ def is_weekend(date_str: str) -> bool:
     fmt = "%Y-%m-%d"
     dt = datetime.strptime(date_str, fmt)
     return dt.weekday() >= 5
+
+def format_relative(date_str: str) -> str:
+    fmt = "%Y-%m-%d"
+    entered_date = datetime.strptime(date_str, fmt).date()
+    today = datetime.today().date()
+    difference = (entered_date - today).days
+    if difference == 0:
+        return "today"
+    if difference > 0:
+        return f"in {difference} day(s)"
+    else:
+        days_difference = abs(difference)
+        return f"{days_difference} day(s) ago"
+    

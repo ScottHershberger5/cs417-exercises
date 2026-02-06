@@ -1,5 +1,5 @@
 import pytest
-from timeutils.dates import days_between, is_weekend
+from timeutils.dates import days_between, is_weekend, format_relative
 
 def test_days_between_same_day():
     """Two identical dates should be 0 days apart."""
@@ -20,3 +20,12 @@ def test_days_between_invalid_format():
     """A badly formatted string should raise ValueError."""
     with pytest.raises(ValueError):
         days_between("not-a-date", "2025-03-15")
+
+def test_relative_format_is_today():
+    assert format_relative("2026-02-06") == "today"
+
+def test_relative_format_is_in_future():
+    assert format_relative("2026-02-25") == "in 19 day(s)"
+
+def test_relative_format_is_in_past():
+    assert format_relative("2026-02-01") == "5 day(s) ago"
